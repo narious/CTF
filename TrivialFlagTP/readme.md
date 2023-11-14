@@ -35,4 +35,7 @@ VHFRQGURCEBTENZNAQUVQVGJVGU-QHRQVYVTRAPR.PURPXBHGGURCUBGBF
     - Extract and cd into the folder then run `./configure && make && make check && sudo make install`
     - Run ./configure again from steghide
     - Fix diff: src/Makefile.old: No such file or director by patching
-    - Specific clang vs gcc error I encountered [similar to this](https://stackoverflow.com/questions/20132805/configure-error-with-mac-os-x-10-8-5-xcode-5-0-2-clang-error-argument-to-v)
+    - Specific clang vs gcc error `configure:11234: gcc -V >&5
+clang: error: argument to '-V' is missing (expected 1 value)` I encountered [similar to this](https://stackoverflow.com/questions/20132805/configure-error-with-mac-os-x-10-8-5-xcode-5-0-2-clang-error-argument-to-v)
+        - Solution: Install gcc and use gcc not clang for gcc invokes
+        - Getting [MacPorts](https://www.macports.org/install.php) to install gcc13 
