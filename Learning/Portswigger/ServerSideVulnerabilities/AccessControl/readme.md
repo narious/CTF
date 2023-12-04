@@ -22,3 +22,5 @@ Some access control is gated by a parameter i.e.,
     - https://insecure-website.com/login/home.jsp?role=1
 
 Horizontal Privledge escaltion means gaining access to other users vsing Admin privledges which is vertical
+
+A large note is information exposed in cookies, html or anywhere on the page. This information may be able to be used.
