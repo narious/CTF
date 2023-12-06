@@ -25,3 +25,9 @@ However people are genrally lazy and will use passwords that a small variations 
 Password!0, Password?0 etc
 
 This enumeration can be done using a known password list and user name then utilizing something like Burp Suite Intruder
+
+Solved 4 Dec 2023: User the commonpass and commonuser found user puppet with password soccer 
+![labusername](./labusername.png)
+
+## Bypassing 2FA
+Sometimes if we see login then 2FA then we have already entered into a "logged in stage" and often we can bypass other checks using just the login step. Changing the URL
