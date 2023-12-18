@@ -1,12 +1,4 @@
 # CTF
-Repository of CTFs 
+Repository of CTF Complettion and learning
 
-### Cryptography
-- [Dachchund Attack](./DachshundAttack/)
-- [MiniRSA](./miniRSA/)
-
-## Forensics
-- [TrivialFlagTransferProtocol](./TrivialFlagTP/)
-
-## Web
-- [Cookies](./Cookies/)
+[PicoCTF](./PicoCTF)
