@@ -40,7 +40,7 @@ clang: error: argument to '-V' is missing (expected 1 value)` I encountered [sim
         - Solution: Install gcc and use gcc not clang for gcc invokes
         - Getting [MacPorts](https://www.macports.org/install.php) to install gcc13 
 
-### Running on Linux
+### Out with MAC In with Linux
 
 Installation quick and easy not having to deal with compatibility issues while doing CTF is a lifesaver...
 
