@@ -39,3 +39,32 @@ VHFRQGURCEBTENZNAQUVQVGJVGU-QHRQVYVTRAPR.PURPXBHGGURCUBGBF
 clang: error: argument to '-V' is missing (expected 1 value)` I encountered [similar to this](https://stackoverflow.com/questions/20132805/configure-error-with-mac-os-x-10-8-5-xcode-5-0-2-clang-error-argument-to-v)
         - Solution: Install gcc and use gcc not clang for gcc invokes
         - Getting [MacPorts](https://www.macports.org/install.php) to install gcc13 
+
+### Running on Linux
+
+Installation quick and easy not having to deal with compatibility issues while doing CTF is a lifesaver...
+
+### Supicous Instructions .. Ceasar Cipher!?
+
+The contents of instruction and plan look like a ceasar cipher. i.e., its alpha characters that sorta don't make sense could be shifted
+
+We apply a 13 shift to plan and get this results
+
+>TFTPDOESNTENCRYPTOURTRAFFICSOWEMUSTDISGUISEOURFLAGTRANSFER.FIGUREOUTAWAYTOHIDETHEFLAGANDIWILLCHECKBACKFORTHEPLAN
+
+>IUSEDTHEPROGRAMANDHIDITWITH-DUEDILIGENCE.CHECKOUTTHEPHOTOS
+
+Aha! They hide it -DUEDILIGENCE. this may be the passphrase..
+
+Nice the first step of the puzzle
+
+### Stegonography and the images and DUEDILIGENCE!
+
+So we attenot to one by one use `stegohide info <filename>` to examine if we can extract anything from the suspicous images! Using the passphrase DUEDILIGENCE.. after some, due diligence we get a hit!
+
+![paid_off](./dd.jpg)
+
+
+> picoCTF{h1dd3n_1n_pLa1n_51GHT_18375919}
+
+
