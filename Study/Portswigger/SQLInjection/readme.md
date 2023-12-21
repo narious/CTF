@@ -224,4 +224,15 @@ Veryfying the existance of columns by using the following queries
 - Verify length of password (iterate through greater and greater lengths)
 - `TrackingId=xyz' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>2)='a`
 
+Tips:
+- Ctrl-U to URL encode text in Burp Suite
+- Use Python to avoid getting limited
+- Use notes for blind SQL detailed since each step is onerous (or use video - screen streaming)
+- Payload screen use bruteforcer to do all the characters in a list
 
+Community/Youtube Solutions
+- [RanaKhaliYTube](https://www.youtube.com/watch?v=5brORHQSJMc)
+- [Local Python Script](./lab_blind_sql/sql_lab_blindSQL.py)
+- [Script source](https://github.com/rkhal101/Web-Security-Academy-Series/blob/main/sql-injection/lab-11/sqli-lab-11.py)
+
+Improvements to the script is to run it parallell using threads (10 or something)
