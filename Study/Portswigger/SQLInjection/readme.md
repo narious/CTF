@@ -178,3 +178,39 @@ For instance guessing the password
 ### [Lab Blind SQL with conditional response](https://portswigger.net/web-security/learning-paths/sql-injection/sql-injection-exploiting-blind-sql-injection-by-triggering-conditional-responses/sql-injection/blind/lab-conditional-responses)
 
 In this lab we will need to do some bruteforce hence what will be used is Burp Intruder!
+
+We are given there is a vulnerability in the `Tracking ID` cookie field that causes the website to give us a "Welcome back" message if the SQL injection is true.. thus we can use this to slowly extract data
+
+We use this query
+
+> ' OR SUBSTRING((SELECT password FROM users WHERE username = 'administrator'), 1, 1) > 'p' --
+
+In html request format
+> Cookie: TrackingId='%20OR%20SUBSTRING((SELECT%20password%20FROM%20users%20WHERE%20username%20%3d%20'administrator')%2c%201%2c%201)%20%3d%20'p'%20--;
+
+And iterate through all positions, a smart algorithm we can construct is using a binary search on the characters instead of linear; however within the Burp Suite we will use linear
+
+We simply run a SNIPER attack knowing that the substring method has the following syntax
+`SUBSTRING(your_column FROM start_position FOR length)`
+
+Thus we can try a sniper attack iterating fro and all characters and manually changing the `start_position` because..
+
+> Burp Free Version throttles the rate after ~20, ~30, ~40, ~50 ...~100  after 100 its really slow. Better to do multiple short batches of request than one large batch.
+
+Our technique is the following to minimize throttling
+- Manually change the position of the start of the substring 1 to N
+- Set the payload to [charlist_common.txt](./lab_blind_sql/charlist_common.txt)
+- If no hits using charlist_common go to the next start_index and check if we have hit end of password (if we observe many consecutive non-hits), otherwise use [charlist_uncommon.txt](./lab_blind_sql/charlist_uncommon.txt) on the non-hit positions
+
+ hit
+![hit](./lab_blind_sql/ret_example.png) 
+
+...
+\<Some extended amount of time passes\>
+
+after running it multiple times with diffrent positions... 
+>69mv87e5eii164ftiirx
+
+We have the password!
+
+![pass](./lab_blind_sql/pass.png)
