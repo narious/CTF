@@ -232,7 +232,8 @@ Tips:
 
 Community/Youtube Solutions
 - [RanaKhaliYTube](https://www.youtube.com/watch?v=5brORHQSJMc)
-- [Local Python Script](./lab_blind_sql/sql_lab_blindSQL.py)
 - [Script source](https://github.com/rkhal101/Web-Security-Academy-Series/blob/main/sql-injection/lab-11/sqli-lab-11.py)
 
-Improvements to the script is to run it parallell using threads (10 or something)
+We rewrite the script from RanaKhali to utilize paralellism thus the entire process takes less then 30 seconds rather than 10min+ nice!
+
+[Paralell Python Script](./lab_blind_sql/sql_lab_blindSQL.py)
