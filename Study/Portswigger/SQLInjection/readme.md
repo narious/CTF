@@ -237,3 +237,6 @@ Community/Youtube Solutions
 We rewrite the script from RanaKhali to utilize paralellism thus the entire process takes less then 30 seconds rather than 10min+ nice!
 
 [Paralell Python Script](./lab_blind_sql/sql_lab_blindSQL.py)
+
+
+## Error Based SQL Injections
